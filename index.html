@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">		
+		<meta name="viewport" content="width=device-width">
+		<title>Chá de bebê da Helena</title>
+
+		<link rel="stylesheet" href="reset.css">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<header>
+			<div class="caixa">
+				<h1><img src="logo_bebe.png" alt="Carrinho de bebê"></h1>
+
+				<!--nav>
+					<h2 class="titulo-principal">Chá da Helena: QUIZ</h2>
+				</nav-->
+			</div>
+		</header>
+
+		<main>
+
+			<h2 class="titulo-principal" id="pergunta">Se ela nascer na data esperada, qual será o signo da Helena?</h2>
+			<form onsubmit="return false">
+				<!--label>Pergunta</label-->
+				<input type="submit" value="Gêmeos" class="resposta1" id="resp1" onclick="return Answer1();">
+				<input type="submit" value="Touro" class="resposta2" id="resp2" onclick="return Answer2();">
+				<input type="submit" value="Áries" class="resposta3" id="resp3" onclick="return Answer3();">
+				<input type="submit" value="Cancer" class="resposta4" id="resp4" onclick="return Answer4();">
+			</form>		
+		</main>
+		<footer>			
+			<h2 class="titulo-principal" id="resposta"></h2>
+		</footer>
+		<script src="js/script.js"></script>
+	</body>
+</html>
