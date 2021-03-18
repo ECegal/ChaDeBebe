@@ -172,7 +172,6 @@ function Answer1() {
 
 function LoadFields(){
     participante = decodeURI(GetURLParameter('participante'));
-    mensagem = decodeURI(GetURLParameter('mensagem'));
 
     if(!already)
     {       
@@ -246,8 +245,7 @@ function time(){
 
  function SaveFields(){
     participante = document.getElementById("nomesobrenome").value;
-    mensagem = document.getElementById("mensagem").value;
-    window.location.href = "quiz.html?participante=" + participante + "&mensagem=" + mensagem;
+    window.location.href = "quiz.html?participante=" + participante;
  }
 
  function GetURLParameter(sParam){
