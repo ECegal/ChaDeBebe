@@ -23,6 +23,15 @@ header {
 	text-shadow: 2px 2px #FF0000*/
 }
 
+.titulo-secundario {
+	text-align: center;
+	font-size: 1em;
+	margin: 10px 10px 1em;
+	clear: left;
+	/*color: rgba(0,0,0,0.3)
+	text-shadow: 2px 2px #FF0000*/
+}
+
 form {
 	margin: 40px 0;
 }
@@ -42,10 +51,11 @@ form {
 	margin: 15px 5px;
 }
 
+/*
 .resposta1:hover {
 	background: darkorange;
 	transform: scale(1.1);
-}
+}*/
 
 .resposta2 {
 	width:45%;
@@ -62,10 +72,11 @@ form {
 	margin: 15px 5px;
 }
 
+/*
 .resposta2:hover {
 	background: palevioletred;
 	transform: scale(1.1);
-}
+}*/
 
 .resposta3 {
 	width:45%;
@@ -82,10 +93,11 @@ form {
 	margin: 15px 5px;
 }
 
+/*
 .resposta3:hover {
 	background: darkblue;
 	transform: scale(1.1);
-}
+}*/
 
 .resposta4 {
 	width:45%;
@@ -102,9 +114,30 @@ form {
 	flex-wrap: wrap;
 }
 
+/*
 .resposta4:hover {
 	background: darkred;
 	transform: scale(1.1);
+}*/
+
+.input-padrao {
+	display: block;
+	margin: 0 0 20px;
+	padding: 10px 25px;
+	width: 50%;
+}
+
+.enviar {
+	width:40%;
+	padding: 15px 0;
+	background: orange;
+	color: white;
+	font-weight: bold;
+	font-size: 18px;
+	border: none;
+	border-radius: 5px;
+	transition: 1s all;
+	cursor: pointer;
 }
 
 

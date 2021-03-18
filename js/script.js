@@ -109,7 +109,7 @@ var quiz = [
         "valor"         :   1,
     },
     {
-        "pergunta"		: 	"Quantas horas de sono um bebê de até 3 pode fazer?",
+        "pergunta"		: 	"Quantas horas de sono um bebê de até 3 meses pode fazer?",
         "respostas"		: 	[
                                 "De 8 a 10",
                                 "De 10 a 13",
@@ -122,39 +122,96 @@ var quiz = [
     },
 ];
 
+var participante = "ninguém";
+var mensagem = "";
+
 var indice = 0;
 var pontos = 0;
+var timer = 15;
+
+var already = false;
+var timecount = 20;
+var obj;
 
 function Answer1() {
+    clearInterval(tm);
     Check(document.getElementById("resp1").value);
     LoadQuestion();
+    elapsed = timecount;
+    time();
     return true;
- }
+}
 
  function Answer2() {
+    clearInterval(tm);
     Check(document.getElementById("resp2").value);
-    LoadQuestion();
+    LoadQuestion();    
+    elapsed = timecount;
+    time();
     return true;
- }
+}
 
  function Answer3() {
+    clearInterval(tm);
     Check(document.getElementById("resp3").value);
-    LoadQuestion();
+    LoadQuestion();    
+    elapsed = timecount;
+    time();
     return true;
- }
+}
 
  function Answer4() {
+    clearInterval(tm);
     Check(document.getElementById("resp4").value);
-    LoadQuestion();
+    LoadQuestion();    
+    elapsed = timecount;
+    time();
     return false;
+}
+
+
+function LoadFields(){
+    participante = decodeURI(GetURLParameter('participante'));
+    mensagem = decodeURI(GetURLParameter('mensagem'));
+
+    if(!already)
+    {       
+        time();
+       LoadQuestion();
+    }
+    else
+    {
+        alert("Você já fez o quiz, aguarde o resultado");
+    }
+ }
+var tm;
+var elapsed = 20;
+
+function time(){
+    tm = setInterval(() => {
+        elapsed-= 1;     
+        if(elapsed >= 0)
+        {   
+            document.getElementById("resposta").innerHTML = "Faltam " + elapsed + " segundos";
+        }
+        else
+        {
+            clearInterval(tm);
+            elapsed = timecount;
+            Check("");
+            LoadQuestion();
+            time();
+        }
+       }, 1000);
  }
 
-
- function Check(resposta)
- {
-    event.preventDefault();
+ function Check(resposta) {   
     var texto = "ERRADO, resposta correta: " + quiz[indice].correta +"\r\n"
-    if(resposta == quiz[indice].correta)
+    if(resposta == "")
+    {
+        texto = "TEMPO ESGOTADO, resposta correta: " + quiz[indice].correta +"\r\n"
+    }
+    else if(resposta == quiz[indice].correta)
     {
         pontos += quiz[indice].valor;
         texto = "CERTO\r\n";  
@@ -164,15 +221,44 @@ function Answer1() {
     indice = indice + 1;
  }
 
- function LoadQuestion() {
-    document.getElementById("pergunta").value = quiz[indice].pergunta;
-    document.getElementById("resp1").value = quiz[indice].respostas[0];
-    document.getElementById("resp2").value = quiz[indice].respostas[1];
-    document.getElementById("resp3").value = quiz[indice].respostas[2];
-    document.getElementById("resp4").value = quiz[indice].respostas[3];    
-    document.getElementById("pergunta").innerHTML = quiz[indice].pergunta;
-    document.getElementById("resp1").innerHTML = quiz[indice].respostas[0];
-    document.getElementById("resp2").innerHTML = quiz[indice].respostas[1];
-    document.getElementById("resp3").innerHTML = quiz[indice].respostas[2];
-    document.getElementById("resp4").innerHTML = quiz[indice].respostas[3];      
+ function LoadQuestion() {    
+     if(indice < quiz.length)
+     {
+        document.getElementById("pergunta").value = quiz[indice].pergunta;
+        document.getElementById("resp1").value = quiz[indice].respostas[0];
+        document.getElementById("resp2").value = quiz[indice].respostas[1];
+        document.getElementById("resp3").value = quiz[indice].respostas[2];
+        document.getElementById("resp4").value = quiz[indice].respostas[3];    
+        document.getElementById("pergunta").innerHTML = quiz[indice].pergunta;
+        document.getElementById("resp1").innerHTML = quiz[indice].respostas[0];
+        document.getElementById("resp2").innerHTML = quiz[indice].respostas[1];
+        document.getElementById("resp3").innerHTML = quiz[indice].respostas[2];
+        document.getElementById("resp4").innerHTML = quiz[indice].respostas[3];  
+     }
+     else
+     {
+         //TODO: enviar resultado para server
+        window.alert(participante + ", você fez " + pontos + " pontos, boa sorte!"); 
+        window.location.href = "end.html";
+
+     }
  }
+
+ function SaveFields(){
+    participante = document.getElementById("nomesobrenome").value;
+    mensagem = document.getElementById("mensagem").value;
+    window.location.href = "quiz.html?participante=" + participante + "&mensagem=" + mensagem;
+ }
+
+ function GetURLParameter(sParam){
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++){
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam){
+            return sParameterName[1];
+        }
+    }
+}
+
+
