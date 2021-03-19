@@ -268,6 +268,7 @@ function time(){
     xhr.open("POST","http://177.158.89.47:80/quiz?resposta="+respostaQuiz);
     //xhr.setRequestHeader( 'Content-Type', 'application/json');
       
+    
     xhr.addEventListener("load",function(){
         serverAnswer = xhr.status;        
     });
