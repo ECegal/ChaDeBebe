@@ -120,10 +120,9 @@ var quiz = [
                             "explicacao"	: 	"Só perde pro pai e para o Legolas...",
                             "valor"         :   1,
                         },
-                    ];
-                    
+                    ];;           
 
- var serverAnswer;
+var serverAnswer;
 var participante = "ninguém";
 var mensagem = "";
 
@@ -174,17 +173,24 @@ function Answer1() {
 
 function LoadFields(){
     participante = decodeURI(GetURLParameter('participante'));
-
-    if(!already)
-    {       
-        time();
-        LoadQuestion();
-    }
-    else
-    {
-        alert("Você já fez o quiz, aguarde o resultado");
-    }
+    time();
+    LoadQuestion();    
 }
+
+function GetQuestions()
+{
+    
+    var xhr = new XMLHttpRequest();   
+
+    xhr.addEventListener("load",function(){
+        quiz = xhr.response;        
+    });
+   
+
+    xhr.open("GET","http://177.158.89.47:80/quiz");
+    xhr.send();  
+}
+
 var tm;
 var elapsed = 20;
 
@@ -259,12 +265,12 @@ function time(){
  {
     var xhr = new XMLHttpRequest();
     let respostaQuiz = participante + "-" + pontos + "-" + resposta;
-    xhr.open("POST","http://177.158.89.47:80/Quiz?resposta="+respostaQuiz);
-    xhr.setRequestHeader( 'Content-Type', 'application/json');
+    xhr.open("POST","http://177.158.89.47:80/quiz?resposta="+respostaQuiz);
+    //xhr.setRequestHeader( 'Content-Type', 'application/json');
       
     xhr.addEventListener("load",function(){
         serverAnswer = xhr.status;        
-    })
+    });
     
     xhr.send();   
  }
