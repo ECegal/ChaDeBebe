@@ -116,12 +116,13 @@ var quiz = [
                                 "De 14 a 17",
                                 "De 18 a 22"
                             ],
-        "correta"		: 	"De 14 a 17",
-        "explicacao"	: 	"Só perde pro pai e para o Legolas...",
-        "valor"         :   1,
-    },
-];
+                            "correta"		: 	"De 14 a 17",
+                            "explicacao"	: 	"Só perde pro pai e para o Legolas...",
+                            "valor"         :   1,
+                        },
+                    ];;           
 
+var serverAnswer;
 var participante = "ninguém";
 var mensagem = "";
 
@@ -172,17 +173,24 @@ function Answer1() {
 
 function LoadFields(){
     participante = decodeURI(GetURLParameter('participante'));
+    time();
+    LoadQuestion();    
+}
 
-    if(!already)
-    {       
-        time();
-       LoadQuestion();
-    }
-    else
-    {
-        alert("Você já fez o quiz, aguarde o resultado");
-    }
- }
+function GetQuestions()
+{
+    
+    var xhr = new XMLHttpRequest();   
+
+    xhr.addEventListener("load",function(){
+        quiz = xhr.response;        
+    });
+   
+
+    xhr.open("GET","http://177.158.89.47:80/quiz");
+    xhr.send();  
+}
+
 var tm;
 var elapsed = 20;
 
@@ -216,7 +224,11 @@ function time(){
         texto = "CERTO\r\n";  
     } 
 
-    window.alert(texto + quiz[indice].explicacao + "\r\nVocê têm " + pontos + " pontos"); 
+    SendInfo("pergunta: " + indice + "-resposta= " + resposta);
+
+    window.alert(texto + quiz[indice].explicacao + "\r\nVocê têm " + pontos + " pontos\r\n" + serverAnswer); 
+    
+
     indice = indice + 1;
  }
 
@@ -247,6 +259,23 @@ function time(){
     participante = document.getElementById("nomesobrenome").value;
     window.location.href = "quiz.html?participante=" + participante;
  }
+
+
+ function SendInfo(resposta)
+ {
+    var xhr = new XMLHttpRequest();
+    let respostaQuiz = participante + "-" + pontos + "-" + resposta;
+    xhr.open("POST","http://177.158.89.47:80/quiz?resposta="+respostaQuiz);
+    //xhr.setRequestHeader( 'Content-Type', 'application/json');
+      
+    xhr.addEventListener("load",function(){
+        serverAnswer = xhr.status;        
+    })
+    
+    xhr.send();   
+ }
+
+ 
 
  function GetURLParameter(sParam){
     var sPageURL = window.location.search.substring(1);
