@@ -265,7 +265,7 @@ function time(){
  {
     var xhr = new XMLHttpRequest();
     let respostaQuiz = participante + "-" + pontos + "-" + resposta;
-    xhr.open("POST","http://177.158.89.47:80/quiz?resposta="+respostaQuiz);
+    xhr.open("POST","https://177.158.89.47:443/quiz?resposta="+respostaQuiz);
     //xhr.setRequestHeader( 'Content-Type', 'application/json');
       
     
